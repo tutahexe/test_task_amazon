@@ -21,6 +21,9 @@ class Item:
     def __str__(self):
         return f"Item {self.__name} with {self.__rate} rate released on {self.__date}"
 
+    def __repr__(self):
+        return f"Item {self.__name} with {self.__rate} rate released on {self.__date}"
+
     def __eq__(self, other):
         return self.__name == other.__name
 
