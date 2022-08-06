@@ -16,7 +16,7 @@ class LandingHelper:
         return self.ui.wd.find_elements(By.XPATH, "//div[@data-component-type='s-search-result']")
 
     def get_first_item_title(self):
-        first_item = self.ui.wd.find_element(By.XPATH, "//div[@data-component-type='s-search-result']")[0]
+        first_item = self.ui.wd.find_elements(By.XPATH, "//div[@data-component-type='s-search-result']")[0]
         return first_item.find_element(By.CLASS_NAME, "a-size-base-plus.a-color-base.a-text-normal").text
 
     def open_item(self, i=0):
