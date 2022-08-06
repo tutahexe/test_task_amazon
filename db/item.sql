@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS items55 (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(55) NOT NULL,
+    release_date date NOT NULL,
+    rate DOUBLE PRECISION NOT NULL
+);
