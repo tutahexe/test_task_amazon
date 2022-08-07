@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS items15 (
+CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     release_date date NOT NULL,

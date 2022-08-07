@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.data
 def test_b_data_preparation(ui, db):
     ui.open_landing()
     ui.landing.search_for_item('software testing')

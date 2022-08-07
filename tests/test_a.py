@@ -1,3 +1,7 @@
+import pytest
+
+
+@pytest.mark.ui
 def test_a(ui):
     ui.open_landing()
     ui.landing.search_for_item('software testing')

@@ -12,7 +12,7 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("INSERT INTO items15 (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
+            cursor.execute("INSERT INTO items (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
                 item.get_name(), item.get_date(), item.get_rate()))
             conn.commit()
         conn.close()
@@ -25,7 +25,7 @@ class Db:
             for item in items:
                 print(item)
                 try:
-                    cursor.execute("INSERT INTO items15 (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
+                    cursor.execute("INSERT INTO items (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
                         item.get_name(), item.get_date(), item.get_rate()))
                 except Exception as e:
                     print(e.args)
@@ -40,7 +40,7 @@ class Db:
         items = []
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("select * from items15")
+            cursor.execute("select * from items")
             items_records = cursor.fetchall()
             for row in items_records:
                 items.append(Item(name=row[1], date=row[2], rate=row[3]))
@@ -52,7 +52,7 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT SUM (rate)/count(*) AS total FROM items15;")
+            cursor.execute("SELECT SUM (rate)/count(*) AS total FROM items;")
             medium_rate = cursor.fetchone()
         conn.close()
         return float(medium_rate[0])
@@ -62,7 +62,7 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items15 where name = '%s';" % (
+            cursor.execute("SELECT * from items where name = '%s';" % (
                 title))
             conn.commit()
             items = cursor.fetchall()
@@ -74,7 +74,7 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items15 ORDER BY release_date DESC;")
+            cursor.execute("SELECT * from items ORDER BY release_date DESC;")
             conn.commit()
             row = cursor.fetchone()
             item = Item(name=row[1], date=row[2], rate=row[3])

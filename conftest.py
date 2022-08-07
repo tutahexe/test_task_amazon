@@ -32,10 +32,10 @@ def db(request):
 
 def pick_driver_from_config():
     conf_driver = read_value_from_config('driver')
-    if conf_driver == "chrome":
-        driver = webdriver.Chrome(ChromeDriverManager().install())
-    else:
+    if conf_driver == "firefox":
         driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+    else:
+        driver = webdriver.Chrome(ChromeDriverManager().install())
     return driver
 
 
