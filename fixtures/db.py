@@ -1,21 +1,37 @@
 import psycopg2
 
-from config_helper import read_value_from_config
 from models.item import Item
 
 
 class Db:
-    def __init__(self):
-        self.db = read_value_from_config('db_connection')
+    def __init__(self, db):
+        self.db = db
 
-    def write_data_to_db(self, item):
+    def write_single_item_to_db(self, item):
         """Writes item into the database"""
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("INSERT INTO items55 (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
+            cursor.execute("INSERT INTO items15 (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
                 item.get_name(), item.get_date(), item.get_rate()))
             conn.commit()
+        conn.close()
+
+    def write_items_to_db(self, items):
+        """Writes many items into the database"""
+        db = self.db
+        conn = psycopg2.connect(db)
+        with conn.cursor() as cursor:
+            for item in items:
+                print(item)
+                try:
+                    cursor.execute("INSERT INTO items15 (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
+                        item.get_name(), item.get_date(), item.get_rate()))
+                except Exception as e:
+                    print(e.args)
+                    continue
+                finally:
+                    conn.commit()
         conn.close()
 
     def get_all_items_from_db(self):
@@ -24,7 +40,7 @@ class Db:
         items = []
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("select * from items55")
+            cursor.execute("select * from items15")
             items_records = cursor.fetchall()
             for row in items_records:
                 items.append(Item(name=row[1], date=row[2], rate=row[3]))
@@ -36,29 +52,29 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT SUM (rate)/count(*) AS total FROM items55;")
-            medium_rate = cursor.fetchall()
+            cursor.execute("SELECT SUM (rate)/count(*) AS total FROM items15;")
+            medium_rate = cursor.fetchone()
         conn.close()
-        return medium_rate
+        return float(medium_rate[0])
 
-    def get_item_with_title(self, title):
+    def get_items_with_title(self, title):
         """Searches for an item with specific title across all items into the database"""
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items55 where name = '%s';" % (
+            cursor.execute("SELECT * from items15 where name = '%s';" % (
                 title))
             conn.commit()
-            item = cursor.fetchall()
+            items = cursor.fetchall()
         conn.close()
-        return item
+        return items
 
     def get_newest_item(self):
         """Returns the newest item from database"""
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items55 ORDER BY release_date DESC;")
+            cursor.execute("SELECT * from items15 ORDER BY release_date DESC;")
             conn.commit()
             row = cursor.fetchone()
             item = Item(name=row[1], date=row[2], rate=row[3])

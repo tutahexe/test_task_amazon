@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 
 from config_helper import read_value_from_config
+from fixtures.db import Db
 from fixtures.ui import UI
 
 db_fixture = None
@@ -17,6 +18,16 @@ def ui(request):
         driver = pick_driver_from_config()
         ui_fixture = UI(wd=driver)
     return ui_fixture
+
+
+@pytest.fixture()
+def db(request):
+    global db_fixture
+    if db_fixture is None:
+        db = read_value_from_config('db_connection')
+        print(db)
+        db_fixture = Db(db=db)
+    return db_fixture
 
 
 def pick_driver_from_config():
