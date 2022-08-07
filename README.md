@@ -1,7 +1,7 @@
 # test_task_amazon
 # Project installation
-* Install all necessary packages "pip install -r requirements.txt"
-* Get an official Postgress image from docker hub and run container from it
+* Install all necessary packages ```pip install -r requirements.txt```
+* Get an official PostgreSQL image from docker hub ```https://hub.docker.com/_/postgres/``` and run container from it
 ## Configuration:
 * Create config file in root folder named ".env" with next structure:
 ```
