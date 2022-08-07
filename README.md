@@ -15,6 +15,7 @@ db_connection - Service URI (PostgreSQL)
 driver - chrome or firefox (make sure that browser is present in system)
 ## DB initialization
 * Run ```db_initialization.py``` from root directory
+with following command```python .\db_initialization.py```
 # Test execution
 ## Precondition:
 Test B works with data, stored in DB. To grab data and store in DB:
