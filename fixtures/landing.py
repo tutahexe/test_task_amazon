@@ -1,8 +1,6 @@
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common import NoSuchElementException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
 
 from models.item import Item
 
@@ -47,6 +45,7 @@ class LandingHelper:
             except NoSuchElementException:
                 item_date = "Aug 1, 0001"
             items.append(Item(item_name, item_rate_3, item_date))
+            print(items)
         return items
 
     def get_first_item_title(self):

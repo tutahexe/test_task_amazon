@@ -7,7 +7,6 @@ class UI:
 
     def __init__(self, wd):
         self.wd = wd
-        self.wd.implicitly_wait(5)
         self.landing = LandingHelper(self)
         self.cart = CartHelper(self)
         self.item_details = ItemDetailsHelper(self)

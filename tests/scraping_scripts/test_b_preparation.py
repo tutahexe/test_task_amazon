@@ -7,7 +7,7 @@ import pytest
 def test_b_data_preparation(ui, db):
     db.clean_up_table()
     ui.open_landing()
-    time.sleep(10)  # Sleep to pass manually a robot check
+    #time.sleep(10)  # Sleep to pass manually a robot check
     ui.landing.search_for_item('software testing')
     for page in range(2):
         search_results = ui.landing.get_items_from_page()
