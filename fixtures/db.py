@@ -23,7 +23,6 @@ class Db:
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
             for item in items:
-                print(item)
                 try:
                     cursor.execute("INSERT INTO items (name, release_date, rate) VALUES ('%s', '%s', %s);" % (
                         item.get_name(), item.get_date(), item.get_rate()))
@@ -40,7 +39,7 @@ class Db:
         items = []
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("select * from items")
+            cursor.execute("SELECT * FROM items")
             items_records = cursor.fetchall()
             for row in items_records:
                 items.append(Item(name=row[1], date=row[2], rate=row[3]))
@@ -62,7 +61,7 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items where name = '%s';" % (
+            cursor.execute("SELECT * FROM items WHERE name = '%s';" % (
                 title))
             conn.commit()
             items = cursor.fetchall()
@@ -74,9 +73,19 @@ class Db:
         db = self.db
         conn = psycopg2.connect(db)
         with conn.cursor() as cursor:
-            cursor.execute("SELECT * from items ORDER BY release_date DESC;")
+            cursor.execute("SELECT * FROM items ORDER BY release_date DESC;")
             conn.commit()
             row = cursor.fetchone()
             item = Item(name=row[1], date=row[2], rate=row[3])
         conn.close()
         return item
+
+    def clean_up_table(self):
+        """Delete all items from the item table in database"""
+        db = self.db
+        conn = psycopg2.connect(db)
+        with conn.cursor() as cursor:
+            cursor.execute("DELETE FROM items")
+            conn.commit()
+        conn.close()
+        return True
